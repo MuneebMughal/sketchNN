@@ -1,38 +1,54 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: rgb(245, 241, 236);
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.heading {
+  color: blueviolet;
+  margin-top: 3rem;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.description {
+  margin-top: 3rem;
+  font-family: "Dongle", sans-serif;
 }
-
-.App-link {
-  color: #61dafb;
+.leftMargin {
+  margin-left: 1rem;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.rightMargin {
+  margin-right: 1rem;
+}
+.topMargin {
+  margin-top: 1rem;
+}
+.btn-info {
+  color: white !important;
+  background-color: blueviolet !important;
+  border: none !important;
+  border-color: blueviolet !important;
+  outline: none !important;
+}
+.sketchContainer {
+  border: 1px solid;
+  height: 40vh;
+  background-color: white;
+}
+.iconSize {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.imgFit {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+}
+a {
+  color: black;
+}
+.typewriter {
+  margin-top: 5rem;
+  font-size: 4rem;
+  font-family: "Dongle", sans-serif;
 }
