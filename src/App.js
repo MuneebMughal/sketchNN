@@ -6,12 +6,14 @@ import { ImLoop } from "react-icons/im";
 import axios from "axios";
 import Typewriter from "typewriter-effect";
 import { toast } from "react-toastify";
+import { Oval } from "react-loader-spinner";
 const api = axios.create({
-  baseURL: `https://picsum.photos`,
+  baseURL: `https://0bd7-34-73-148-230.ngrok.io`,
 });
 function App() {
   const [input, setInput] = useState("");
   const [lastInput, setLastInput] = useState("");
+  const [loading, setLoading] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
   useEffect(() => {}, [imgUrl]);
 
@@ -29,20 +31,23 @@ function App() {
   };
   const generate = () => {
     setImgUrl("");
-    if (input == "") {
+    if (input === "") {
       toast.error("Input can't be empty");
     } else {
       setLastInput(input);
-      const random = getRandomNum();
-      setImgUrl(`https://picsum.photos/id/${random}/600/300`);
-      // api
-      //   .get(`/`)
-      //   .then((res) => {
-      //     console.log(res.data);
-      //   })
-      //   .catch((error) => {
-      //     toast.error("Something went wrong.");
-      //   });
+      // const random = getRandomNum();
+      // setImgUrl(`https://picsum.photos/id/${random}/600/300`);
+      setLoading(true);
+      api
+        .get(`/${input}`)
+        .then((res) => {
+          setImgUrl(res.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          toast.error("Something went wrong.");
+          setLoading(false);
+        });
     }
   };
   const regenerate = () => {
@@ -50,16 +55,19 @@ function App() {
     if (lastInput === "") {
       toast.error("Nothing to Regenerate");
     } else {
-      const random = getRandomNum();
-      setImgUrl(`https://picsum.photos/id/${random}/600/300`);
-      // api
-      //   .get(`/`)
-      //   .then((res) => {
-      //     console.log(res.data);
-      //   })
-      //   .catch((error) => {
-      //     toast.error("Something went wrong.");
-      //   });
+      // const random = getRandomNum();
+      // setImgUrl(`https://picsum.photos/id/${random}/600/300`);
+      setLoading(true);
+      api
+        .get(`/${lastInput}`)
+        .then((res) => {
+          setImgUrl(res.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          toast.error("Something went wrong.");
+          setLoading(false);
+        });
     }
   };
   const DownloadError = () => {
@@ -87,10 +95,6 @@ function App() {
               type="button"
               className="btn btn-info float-end rightMargin leftMargin topMargin"
               onClick={generate}
-              style={{
-                transition:
-                  "color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out",
-              }}
             >
               Generate
             </button>
@@ -105,12 +109,18 @@ function App() {
         </div>
         <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
           <div className="sketchContainer leftMargin topMargin rightMargin">
-            {imgUrl ? (
-              <img src={imgUrl} alt="Generated Scene" className="imgFit" />
+            {loading ? (
+              <div className="d-flex justify-content-center marginAbove">
+                <Oval color="black" height={80} width={80} />
+              </div>
             ) : (
               <img
-                src={require("./Images/Example.png")}
-                alt="A horse under tree"
+                src={
+                  imgUrl
+                    ? `data:image/png;base64, ${imgUrl}`
+                    : require("./Images/Example.png")
+                }
+                alt={imgUrl ? "Generated Scene" : "A horse under tree"}
                 className="imgFit"
               />
             )}
